@@ -31,6 +31,8 @@ services:
       - ./log:/var/log
     networks:
       - elastic-stack
+    ports:
+      - "5044:5044"
 
 networks:
   elastic-stack:
