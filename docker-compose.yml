@@ -9,7 +9,8 @@ services:
     environment:
       - discovery.type=single-node
     volumes:
-      - ./es_data:/usr/share/elasticsearch/data
+      - ./elasticsearch/es_data:/usr/share/elasticsearch/data
+      - ./elasticsearch/config/jvm.options:/usr/share/elasticsearch/config/jvm.options
     networks:
       - elastic-stack
 
@@ -27,8 +28,9 @@ services:
     container_name: logstash
     image: docker.elastic.co/logstash/logstash:7.0.0
     volumes:
-      - ./pipeline/:/usr/share/logstash/pipeline/
-      - ./log:/var/log
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - ./logstash/log:/var/log
+      - ./logstash/config/jvm.options:/usr/share/logstash/config/jvm.options
     networks:
       - elastic-stack
     ports:

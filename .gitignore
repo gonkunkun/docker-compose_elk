@@ -1,2 +1,3 @@
-es_data/
-log/
+logstash/pipeline
+elasticsearch/es_data
+kibana/
