@@ -13,7 +13,7 @@ FROM docker.elastic.co/logstash/logstash:7.0.0@sha256:08ce6009987afdf3297330a8cc
 # See https://github.com/docker-library/official-images/pull/5039 for more details.
 WORKDIR /usr/share/logstash/config/
 RUN set -x && \
-    sed s/-Xmx1g/-Xmx256m/ jvm.options > jvm.options_new && \
+sed s/-Xmx1g/-Xmx256m/ jvm.options > jvm.options_new && \
     mv jvm.options_new jvm.options && \
     sed s/-Xms1g/-Xms256m/ jvm.options > jvm.options_new && \
     mv jvm.options_new jvm.options
