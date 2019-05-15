@@ -1,0 +1,46 @@
+version: "3"
+services:
+  elasticsearch:
+    # container_name: elasticseach
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - ./elasticsearch/es_data:/usr/share/elasticsearch/data
+      - ./elasticsearch/config/jvm.options:/usr/share/elasticsearch/config/jvm.options
+    networks:
+      - elastic-stack
+    # links:
+    #   - kibana
+    #   - logstash
+
+  kibana:
+    # container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.0.0
+    ports:
+      - "5601:5601"
+    networks:
+      - elastic-stack
+    environment:
+      ELASTICSEARCH_URL: http://localhost:9200
+    # links:
+    #   - elasticsearch
+
+  logstash:
+    # container_name: logstash
+    image: docker.elastic.co/logstash/logstash:7.0.0
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - ./logstash/log:/var/log
+      - ./logstash/config/jvm.options:/usr/share/logstash/config/jvm.options
+    networks:
+      - elastic-stack
+    ports:
+      - "5044:5044"
+    # links:
+    #   - elasticsearch
+networks:
+  elastic-stack:

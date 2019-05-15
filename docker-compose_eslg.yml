@@ -2,7 +2,9 @@ version: "2"
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
-    mem_limit: 768m
+    # mem_limit: 805306368
+    mem_limit: 736870912
+    # mem_limit: 268435456
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -24,28 +26,18 @@ services:
     # sysctls:
     # vm.max_map_count: 262144
 
-  # kibana:
-  #   image: docker.elastic.co/kibana/kibana:7.0.0
-  #   mem_limit: 708m
-  #   ports:
-  #     - "5601:5601"
-  #   networks:
-  #     - elastic-stack
-  #   environment:
-  #     ELASTICSEARCH_URL: http://localhost:9200
-
   logstash:
     image: docker.elastic.co/logstash/logstash:7.0.0
-    mem_limit: 512m
+    # mem_limit: 306870912
+    mem_limit: 268435456
     ports:
       - "5044:5044"
-    # volumes:
-    #   - ./logstash/pipeline:/usr/share/logstash/pipeline
-    environment:
-      - "LS_JAVA_OPTS=-Xms256m -Xmx256m"
-      # - "XPACK_MONITORING_ENABLED=false"
     networks:
       - elastic-stack
+    # volumes:
+    # - ./logstash/pipeline:/usr/share/logstash/pipeline
+    environment:
+      - "LS_JAVA_OPTS=-Xms256m -Xmx256m"
 
 networks:
   elastic-stack:
